@@ -7,6 +7,8 @@ Multi-platform UI programming orchestrator.
 - **apple-smith**: SwiftUI & Swift specialist.
 - **windows-smith**: C# & .NET (WinUI 3, WPF) specialist.
 - **linux-smith**: Rust UI (Tauri, Iced, Slint) specialist.
+- **screenshot-audit**: Audit visual changes via pixel-diff and HIG/a11y check.
+- **design-to-code**: Compare design specs/images to implementation logic.
 - Provide platform-specific idiomatic UI assistance.
 
 ## Rules
