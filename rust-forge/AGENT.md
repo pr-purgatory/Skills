@@ -4,7 +4,7 @@
 Multi-agent Rust programming orchestrator.
 
 ## Capabilities
-- **rust-debugger**: Resolve compilation/test failures.
+- **rust-debugger**: Resolve compilation/test failures; includes REPL for interactive debugging.
 - **rust-architect**: Design module structures and scaffold code.
 - **rust-tester**: Generate unit/integration tests and property-based tests.
 - Integrate with Cargo ecosystem (check, test, clippy).

@@ -6,6 +6,9 @@ name: rust-forge
 
 Primary orchestrator for Rust development tasks. Delegates to specialized sub-agents based on context.
 
+## Context Efficiency
+- **Minimal Cargo.toml**: When analyzing dependencies, read ONLY `[package]` and `[dependencies]` / `[dev-dependencies]` sections. ⊥ read full file unless workspace configuration is required.
+
 ## Sub-Agents
 
 ### 🦀 rust-debugger

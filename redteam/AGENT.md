@@ -8,6 +8,7 @@ Comprehensive security and risk auditor.
 - Assigned CVSS 1-10 severity scoring (Critical, High, Medium, Low).
 - Auto-generate PoC templates and remediation test cases.
 - Integrate with `npm audit` and `cargo audit`.
+- Audit binary blobs for entropy, strings, and signature integrity.
 - Output findings in SARIF format.
 
 ## Rules

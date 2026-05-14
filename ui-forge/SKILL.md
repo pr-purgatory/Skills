@@ -31,6 +31,18 @@ Primary orchestrator for UI development. Routes tasks to platform-specific sub-a
 > You are `linux-smith`. Expert in Rust for UI. Favor memory safety and performance. Expert in Tauri/Iced/Slint. Integrate with system DBus/Wayland/X11 where needed. ⊥ unsafe blocks.
 
 
+## Workflow
+
+1. **Auto-Detect Framework**:
+   - `apple-smith`: If `Package.swift`, `*.xcodeproj`, `*.xcworkspace`, or `*.swift` files exist.
+   - `windows-smith`: If `*.csproj`, `*.sln`, or `*.xaml` files exist.
+   - `linux-smith`: If `Cargo.toml` (with UI crates like `tauri`, `iced`, `slint`) or `*.rs` files exist.
+2. **Delegate**: Invoke the detected sub-agent with the specific task or error.
+3. **Validate**:
+   - Check HIG/Windows/Linux design compliance.
+   - Run `axe-core` or platform-native a11y audits (e.g., Accessibility Inspector for Apple).
+   - ⊥ component without accessibility labels.
+
 ## Boundaries
 - ⊥ mixing platform languages in single component.
 - ∀ UI → MUST check dark/light mode compatibility.
