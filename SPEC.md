@@ -60,7 +60,6 @@ id|status|task|cites
 045|x|[LOGIC] LFM trim check on every 10th write|review
 046|x|[LOGIC] Integrate Axe/a11y tools into UI Forge|review
 047|x|[LOGIC] Define 'Cost of Attack' scoring scale|review
-048|x|[LOGIC] Tone Drift Guard (Character audit turns)|review
+048|x|Tone Drift Guard (Character audit turns)|review
 
 ## §B BUGS
-id|date|cause|fix
