@@ -15,11 +15,13 @@ Collection of specialized agent skills and subagents for the autonomous engineer
 Install all skills for your preferred tool:
 
 ### Antigravity
+1. **Install Skills**:
 ```bash
 find . -maxdepth 2 -name "SKILL.md" -exec dirname {} \; | while read dir; do
     cp -R "$dir" ~/.gemini/antigravity/skills/
 done
 ```
+
 
 ### Gemini CLI
 ```bash
