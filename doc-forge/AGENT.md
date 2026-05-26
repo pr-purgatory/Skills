@@ -10,7 +10,7 @@ Specialist in synchronizing documentation with code state.
 
 ## Rules
 - ∀ code change → check if docs need update.
-- Use `TasksEmpty` or `TaskSuccess` events for background sync.
+- Use `TasksEmpty` or `TaskSuccess` events for background sync (excluding `*.md` paths).
 - ⊥ overwrite manual documentation without diff review.
 
 ## Invocation Prompt Template

@@ -61,6 +61,35 @@ id|status|task|cites
 046|x|[LOGIC] Integrate Axe/a11y tools into UI Forge|review
 047|x|[LOGIC] Define 'Cost of Attack' scoring scale|review
 048|x|Tone Drift Guard (Character audit turns)|review
+058|x|[doc-forge] Impl markdown gen templates in SKILL.md|tbd_skills_roadmap
+059|x|[doc-forge] Exclude doc paths from event loop triggers|tbd_skills_roadmap
+060|x|[doc-forge] Restrict external links to block SSRF|tbd_skills_roadmap
+061|x|[doc-forge] Sanitize scanned markdown files|tbd_skills_roadmap
+062|x|[perf-profiler] Restrict to hyperfine benchmark tool|tbd_skills_roadmap
+063|x|[perf-profiler] Run benchmark within sandbox-forge|tbd_skills_roadmap
+064|x|[perf-profiler] Force manual trigger only (prevent DoS)|tbd_skills_roadmap
+065|x|[vibe-check] Link STYLE.md rules in SKILL.md|tbd_skills_roadmap
+066|x|[vibe-check] Trigger vibe checks on PR/manual hooks only|tbd_skills_roadmap
+067|x|[vibe-check] XML wrap analysed contents|tbd_skills_roadmap
+068|x|[sandbox-forge] Enforce strict Docker security policies|tbd_skills_roadmap
+069|x|[sandbox-forge] Implement container lifecycle & pruning|tbd_skills_roadmap
+070|x|[sandbox-forge] Set CPU/memory resource limits|tbd_skills_roadmap
+071|x|[revert-forge] Mandate git stash before execution|tbd_skills_roadmap
+072|x|[revert-forge] Escape branch name arguments|tbd_skills_roadmap
+073|x|[revert-forge] Limit rollback attempts to 1|tbd_skills_roadmap
+074|x|[dependency-janitor] Verify hashes & lockfiles on updates|tbd_skills_roadmap
+075|x|[dependency-janitor] Run version audits asynchronously|tbd_skills_roadmap
+076|x|[dependency-janitor] Restrict registries to verified endpoints|tbd_skills_roadmap
+077|x|[success-forge] Impl caveman-stats token usage parser|tbd_skills_roadmap
+078|x|[success-forge] Auto-prune SUCCESS_LOG above 50KB|tbd_skills_roadmap
+079|x|[success-forge] Sanitize success logs & comments|tbd_skills_roadmap
+080|x|[context-janitor] Impl compaction & pruning directives|tbd_skills_roadmap
+081|x|[context-janitor] Force atomic backup before context flush|tbd_skills_roadmap
+082|x|[context-janitor] Secure trigger signatures for limit events|tbd_skills_roadmap
+083|x|[test-sentry] Impl test plan validation schema|tbd_skills_roadmap
+084|x|[test-sentry] Track commit hashes to block loop triggers|tbd_skills_roadmap
+085|x|[test-sentry] Enforce test coverage & diff gates|tbd_skills_roadmap
+086|x|[supply-chain] Restrict local agent package configs to private|tbd_skills_roadmap
 
 ## §B BUGS
 id|date|cause|fix
