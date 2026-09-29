@@ -10,11 +10,17 @@ Central repo for skills by pr-purgatory team.
 
 ## §I INTERFACES
 - `SKILL.md`: Skill definition & instructions.
+- `AGENT.md`: Subagent identity/rules (Identity, Capabilities, Rules, Invocation Prompt Template).
+- `SPEC.md`: Per-skill cavekit spec.
+- `AGENTS.md`: Subagent registry.
 - `README.md`: Human docs.
 
 ## §V INVARIANTS
 V1: ∀ skill → `SKILL.md` exists.
-V2: ∀ skill → `LICENSE` exists.
+V2: ∀ skill → `LICENSE`, `AGENT.md`, `SPEC.md` exist.
+V3: ∀ `SKILL.md` frontmatter → exactly `name`, `description`; description ends w/ "Use when …" trigger.
+V4: ∀ `SKILL.md` body → `# Title`, then `## Goal`, …, `## Boundaries` last.
+V5: ∀ skill → row in `AGENTS.md` & README registry.
 
 ## §T TASKS
 id|status|task|cites
@@ -91,6 +97,10 @@ id|status|task|cites
 085|x|[test-sentry] Enforce test coverage & diff gates|tbd_skills_roadmap
 086|x|[supply-chain] Restrict local agent package configs to private|tbd_skills_roadmap
 087|x|Prune 17 generic/unimplemented skills (tasks 021-026,058-085 obsolete)|review
+089|x|Normalize all SKILL.md to V3/V4|V3,V4
+090|x|Add `LICENSE`/`AGENT.md`/`SPEC.md` for deep-research-firecrawl; `SPEC.md` for revert-forge, sandbox-forge|V2
+091|x|Add `deep-research-firecrawl` to `AGENTS.md`/README registry|V5
+092|.|Track or drop `test_skill.md` (cavekit protocol; gitignored but referenced by §C)|§C
 
 ## §B BUGS
 id|date|cause|fix

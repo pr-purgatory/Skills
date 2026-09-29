@@ -20,7 +20,7 @@ LinkedIn profiles are aggressively protected against automated access. Multiple 
 ## Case Study: Middle-Initial Mismatch
 - Provided URL: `https://www.linkedin.com/in/{firstname-x-lastname}/` → **404**
 - Discovered URL for the likely intended person (a university faculty member): `https://www.linkedin.com/in/{firstname-y-lastname-id}/` — found via ExpertFile profile and search corroboration.
-- Key clue: The "K" in the URL may have been a typo or a different person entirely. The prominent professional {Name} uses middle initial "A" ({Name}).
+- Key clue: The middle initial in the provided URL may have been a typo or a different person entirely; the likely intended person uses a different middle initial.
 
 ## Recommendation
 When a user provides a LinkedIn URL that fails:

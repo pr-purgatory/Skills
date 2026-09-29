@@ -4,6 +4,7 @@ This registry defines the available subagents derived from the local skills. Use
 
 | Agent Name | Description | Rules File |
 |------------|-------------|------------|
+| `deep-research-firecrawl` | Source-cited web research via self-hosted Firecrawl | `deep-research-firecrawl/AGENT.md` |
 | `lfm` | Failure memory manager | `lfm/AGENT.md` |
 | `redteam` | Security and risk auditor | `redteam/AGENT.md` |
 | `revert-forge` | Safe rollback specialist | `revert-forge/AGENT.md` |

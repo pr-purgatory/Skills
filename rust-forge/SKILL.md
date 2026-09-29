@@ -1,9 +1,13 @@
 ---
 name: rust-forge
-description: Multi-agent Rust assistance for debugging, scaffolding, and testing.
+description: >
+  Multi-agent Rust assistance for debugging, scaffolding, and testing.
+  Use when fixing Rust build/test failures, designing new modules, or adding Rust tests.
 ---
 
 # Rust Forge
+
+## Goal
 
 Primary orchestrator for Rust development tasks. Delegates to specialized sub-agents based on context.
 

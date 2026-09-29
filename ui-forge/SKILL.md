@@ -1,9 +1,13 @@
 ---
 name: ui-forge
-description: Multi-platform UI app assistance for Apple, Windows, and Linux. Delegates to specialized sub-agents.
+description: >
+  Multi-platform native UI assistance for Apple (SwiftUI), Windows (WinUI/WPF), and Linux (Rust UI).
+  Use when building, reviewing, or debugging native UI; delegates to platform sub-agents.
 ---
 
 # UI Forge
+
+## Goal
 
 Primary orchestrator for UI development. Routes tasks to platform-specific sub-agents.
 

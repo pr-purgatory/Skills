@@ -33,6 +33,8 @@ id|status|task|cites
 013|x|Scrub findings of source code snippets|review
 014|x|Limit recursion depth for stress tests|review
 015|x|Implement 'ignore' list for known-safe patterns|review
+016|x|Create missing `references/criteria.md` (lens definitions linked from SKILL.md Workflow step 2)|audit
+017|x|Normalize SKILL.md to root format (H1, Goal, Boundaries)|root V3
 
 ## §R REVIEW
 😼 RedTeam — You're training a guard dog, but you forgot to tell him who the owner is.

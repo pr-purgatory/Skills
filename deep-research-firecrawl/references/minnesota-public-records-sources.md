@@ -21,7 +21,7 @@
 |--------|-----|---------------|-------|
 | Minnesota Court Records Online (MCRO) | `publicaccess.courts.state.mn.us` | Court case search | Requires case number or name search via web UI |
 | Ramsey County Jail Roster | `ramseycountymn.gov` / `opendata.ramseycountymn.gov` | In-custody bookings | Open data portal available |
-| Minnesota Secretary of State | `sos.state.mn.us` | Business entity search | For verifying "{Business Name}" type registrations |
+| Minnesota Secretary of State | `sos.state.mn.us` | Business entity search | For verifying business registrations at an address |
 
 ## Area Codes for Geographic Context
 | Area Code | Region |

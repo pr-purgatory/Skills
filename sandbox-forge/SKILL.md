@@ -1,10 +1,12 @@
 ---
 name: sandbox-forge
 description: >
-  Specialist in creating isolated environments for safe code execution and testing.
-  Uses secure Docker container configurations, dropping network/privileged rights,
-  enforcing container resource limits, and auto-cleanup (TTL pruning).
+  Run untrusted or experimental code in a locked-down Docker container: no network,
+  no capabilities, read-only root, CPU/memory caps, 60s TTL, auto-prune.
+  Use when asked to sandbox, isolate, or safely execute code or reproduce a bug.
 ---
+
+# Sandbox Forge
 
 ## Goal
 Scaffold and run untrusted code inside highly restricted Docker containers or virtual sandboxes. Ensure complete isolation of the host from any malicious command execution, network access, or resource exhaustion.
@@ -30,7 +32,7 @@ Every sandboxed container MUST follow these strict security constraints:
 2. **JobManager Container TTL & Auto-Pruning**:
    - Every spawned container must have a defined TTL (Time-To-Live). Default maximum execution time is **60 seconds**.
    - Auto-kill containers after TTL expires using a background timeout or wrapper daemon.
-   - Run pruning commands (`docker container prune -f --filter "until=5m"`) on startup or shutdown of any sandboxed task to reclaim host disk space and prevent leakages.
+   - Label every sandbox container (`--label sandbox-forge=1`) and prune only those (`docker container prune -f --filter "label=sandbox-forge=1" --filter "until=5m"`) on startup or shutdown of any sandboxed task. ⊥ unscoped prune — it deletes the user's unrelated stopped containers.
 
 ---
 
@@ -41,8 +43,13 @@ When generating sandbox runs:
 2. Formulate the docker run command:
    ```bash
    docker run --rm \
+     --label sandbox-forge=1 \
      --network none \
      --cap-drop=ALL \
+     --security-opt no-new-privileges \
+     --read-only \
+     --tmpfs /tmp:rw,noexec,nosuid,size=64m \
+     --pids-limit 128 \
      -m 512m \
      --cpus="1.0" \
      -v "$(pwd)/sandbox_temp:/app:ro" \
@@ -52,3 +59,12 @@ When generating sandbox runs:
    ```
 3. Check the exit code and stderr. Return structured feedback.
 4. Clean up any generated temporary script files immediately after execution completes.
+
+---
+
+## Boundaries
+
+- ⊥ `--privileged`, ⊥ host root or `~/.ssh`/`/etc` mounts.
+- Network off by default; enable only on explicit user approval.
+- ⊥ persist data outside sandbox without user approval.
+- ∀ container → TTL + cleanup, even on failure.

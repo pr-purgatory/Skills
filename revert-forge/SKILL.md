@@ -1,10 +1,12 @@
 ---
 name: revert-forge
 description: >
-  Specialist in performing safe git rollbacks and restoring code state.
-  Mandates git stashing, escapes git command arguments to prevent shell injection,
-  and limits recursion loops.
+  Safe git rollback of a failed or rejected implementation. Stashes uncommitted work,
+  validates refs, blocks shell injection, caps retries at one.
+  Use when asked to revert, roll back, or undo a failed change.
 ---
+
+# Revert Forge
 
 ## Goal
 Restore the working directory or git branch safely to a previous clean state when a feature implementation fails, is rejected, or causes severe regressions. Prevent data loss of unrelated uncommitted work and defend against shell injection.
@@ -16,7 +18,7 @@ Restore the working directory or git branch safely to a previous clean state whe
 ### 1. Mandatory Git Stash (Prevent Data Loss)
 Before performing any reset, checkout, or revert operation:
 - You MUST save any uncommitted changes in the working directory or staging area.
-- Command: `git stash save "revert-forge auto-stash before rollback"`
+- Command: `git stash push -u -m "revert-forge auto-stash before rollback"`
 - If `git stash` fails or indicates there is nothing to stash, proceed only after confirming the working tree status.
 
 ### 2. Argument Validation & Escaping (CWE-88)
@@ -42,3 +44,13 @@ To prevent command or shell injection via malformed branch/commit names:
    - To undo a specific commit: `git revert --no-edit <commit_hash>`
    - To hard reset: `git reset --hard <target_ref>`
 5. Validate working directory matches the desired state.
+
+---
+
+## Boundaries
+
+- ⊥ reset/checkout/revert before uncommitted work is stashed.
+- `git reset --hard` or any history-discarding op → confirm with user first.
+- ⊥ pass unvalidated ref names to a shell; argv only.
+- ≤ 1 rollback attempt per target ref per session.
+- ∀ revert → log reason via `lfm`.
