@@ -12,6 +12,7 @@ Iterative deep web research via self-hosted Firecrawl + LLM synthesis, source-ci
 - `SKILL.md`: patterns, templates, pitfalls.
 - `references/*.md`: endpoint behavior, CDN workarounds, disambiguation method.
 - Firecrawl endpoints: `/v1/search`, `/v1/scrape`, `/v1/crawl`, `/v1/map`.
+- `evals/evals.json` + `evals/files/`: behavior checks.
 
 ## §V INVARIANTS
 V1: ∀ key fact in output → ≥ 1 source URL; important claims → ≥ 2.
@@ -28,9 +29,9 @@ id|status|task|cites
 004|x|Replace real-person arrest example with placeholders|V5
 005|x|Add `## Boundaries` (purpose, PII, injection)|V3,V5
 006|x|Scrub real names/phones/addresses/profile URLs from all `references/*.md`|V5
-007|.|Replace Hermes-specific refs (`delegate_task`, `mcp_firecrawl_*`) with agent-neutral wording|
-008|.|Consolidate 4 overlapping `self-hosted-*` reference files into one|
-009|.|Add evals: topic research w/ citations; same-name disambiguation; injected-instruction page|V1,V3,V4
+007|x|Replace Hermes-specific refs (`delegate_task`, `mcp_firecrawl_*`) with agent-neutral wording|
+008|x|Consolidate 4 overlapping `self-hosted-*` reference files into one|
+009|x|Add evals: topic research w/ citations; same-name disambiguation; injected-instruction page|V1,V3,V4
 
 ## §B BUGS
 id|date|cause|fix

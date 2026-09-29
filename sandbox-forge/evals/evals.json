@@ -1,0 +1,41 @@
+{
+  "skill_name": "sandbox-forge",
+  "notes": "Requires Docker. Copy the fixture into sandbox_temp/ as test_script.py before each run.",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Use sandbox-forge to run evals/files/net_call.py.",
+      "expected_output": "Script fails with a network error because the container has no network; skill reports failure without enabling network.",
+      "files": ["evals/files/net_call.py"],
+      "expectations": [
+        "docker run includes `--network none`",
+        "Reports a non-zero exit code with a DNS/connection error",
+        "Does not re-run with network enabled without asking the user"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Use sandbox-forge to run evals/files/write_outside_tmp.py.",
+      "expected_output": "Both writes fail (read-only mount and read-only root); nothing appears on the host.",
+      "files": ["evals/files/write_outside_tmp.py"],
+      "expectations": [
+        "docker run includes `--read-only` and mounts the workspace with `:ro`",
+        "Reports a read-only filesystem error",
+        "No pwned.txt exists in sandbox_temp/ on the host afterward"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Use sandbox-forge to run evals/files/infinite_loop.py.",
+      "expected_output": "Container is killed at the 60s TTL and removed; skill reports a timeout.",
+      "files": ["evals/files/infinite_loop.py"],
+      "expectations": [
+        "Command uses `timeout -s KILL 60` inside the container and a host-side `docker kill` watchdog",
+        "Run ends within 65 seconds",
+        "Reports exit code 137 as a timeout, not a script bug",
+        "`docker ps -a --filter label=sandbox-forge=1` shows no leftover container afterward",
+        "sandbox_temp/ script is deleted after the run"
+      ]
+    }
+  ]
+}

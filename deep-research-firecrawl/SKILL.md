@@ -92,10 +92,9 @@ for result in results:
 **Workflow**:
 ```python
 # Step 1: Use subagent with browser to navigate and get direct URLs
-delegate_task(
-    goal="Navigate [SITE], search for [QUERY], extract direct result URLs",
-    toolsets=["browser", "web"],
-    context="Return ONLY the direct URLs to specific record pages, not search result pages"
+# run_browser_subagent = placeholder for your agent's browser tool/subagent
+urls = run_browser_subagent(
+    task="Navigate [SITE], search for [QUERY]. Return ONLY direct URLs to specific record pages, not search result pages."
 )
 
 # Step 2: Scrape those URLs with self-hosted Firecrawl
@@ -107,10 +106,8 @@ requests.post("http://localhost:3002/v1/scrape", json={"url": direct_url, "forma
 **Example — Background Check:**
 ```python
 # Subagent finds the record URL
-delegate_task(
-    goal="Find {name}'s record on {records_site}",
-    toolsets=["browser", "web"],
-    context="Navigate to {records_site}, search for '{name}', click the record, and return the direct URL"
+record_url = run_browser_subagent(
+    task="Navigate to {records_site}, search for '{name}', open the record, return its direct URL"
 )
 # Returns: https://{records_site}/records/{record_id}/
 
@@ -133,7 +130,7 @@ requests.post("http://localhost:3002/v1/scrape", json={
 **Rule of thumb:**
 - Know the URL? → `scrape`
 - Need to discover URLs? → `search` or `map`
-- Site requires interaction (forms, clicks)? → `delegate_task` with browser, then `scrape` the resulting URLs
+- Site requires interaction (forms, clicks)? → browser subagent/tool, then `scrape` the resulting URLs
 
 ## Best Practices for Deep Research
 
@@ -155,7 +152,7 @@ Require multiple sources for key facts:
 
 ### 3. Structured Output Schemas
 
-When using Hermes' Firecrawl MCP tools (`mcp_firecrawl_firecrawl_scrape`), always use JSON format with a schema for specific data extraction:
+When extracting specific data (via a Firecrawl MCP scrape tool or `/v1/scrape` + LLM), always use JSON output with a schema for specific data extraction:
 
 ```json
 {
@@ -176,7 +173,7 @@ Self-hosted Firecrawl has no per-credit costs. Search and scrape are unlimited.
 
 ### 5. Handling Timeouts
 
-The `/v1/scrape` endpoint can hang on large or heavily-rendered pages (common with news aggregators). Test with a small timeout first (30s). If Firecrawl is unresponsive, fall back to a `delegate_task` with `browser` toolset or skip that source. Do NOT wait indefinitely. See `references/firecrawl-unresponsive.md` for troubleshooting.
+The `/v1/scrape` endpoint can hang on large or heavily-rendered pages (common with news aggregators). Test with a small timeout first (30s). If Firecrawl is unresponsive, fall back to a browser subagent/tool or skip that source. Do NOT wait indefinitely. See `references/firecrawl-unresponsive.md` for troubleshooting.
 
 ## Prompt Templates
 
@@ -225,8 +222,8 @@ Return structured findings with full source attribution.
 7. **Dismissing claims without verification** — When a user presents a document, image, or claim, verify through search before concluding it's fake. Always search first, judge second.
 8. **Akamai CDN / Bot detection blocking** — Government and major corporate sites often use Akamai CDN with aggressive bot detection that blocks `curl`, `wget`, and standard HTTP clients. These return 403 Forbidden with AkamaiGHost headers. The only reliable download method is Playwright/Chromium with in-page `fetch()` calls that inherit the browser's TLS fingerprint. See `references/cdn-bot-detection.md` for the complete workaround pattern.
 9. **Search returns homepage URLs, not articles** — Firecrawl `/v1/search` on news sites often returns category/homepage URLs (e.g., `cnn.com`, `bbc.com/news`) instead of individual article pages. Mitigation: scrape the homepage/category page with Firecrawl's `scrape` and parse article links from the markdown, or use a browser subagent to navigate and extract individual article URLs first.
-10. **Self-hosted Firecrawl scrape times out** — The `/v1/scrape` endpoint can hang on large or heavily-rendered pages. Test with a small timeout first. Fall back to `delegate_task` with `browser` toolset if unresponsive. See `references/firecrawl-unresponsive.md`.
-11. **`web_search` tool may not exist** — Not all Hermes instances have a built-in `web_search` tool. Check `tools available` before assuming it exists. This instance does NOT have it — alternatives are Firecrawl search, or `delegate_task` with browser toolset.
+10. **Self-hosted Firecrawl scrape times out** — The `/v1/scrape` endpoint can hang on large or heavily-rendered pages. Test with a small timeout first. Fall back to a browser subagent/tool if unresponsive. See `references/firecrawl-unresponsive.md`.
+11. **Built-in web search may not exist** — Not every agent runtime has a native web search tool. Check the available tools before assuming one; alternatives are Firecrawl `/v1/search` or a browser subagent.
 12. **Over-specific query strings return empty results** — `/v1/search` on broad queries like "breaking news today May 11 2026" can return zero results, while looser queries like "top news May 2026" produce good hits. Over-constraining with today's exact date + "today" + "breaking" causes the search engine to miss results. For daily/news queries, use month+year scope and let the returned pages filter by date, or scrape the aggregator homepage directly.
 
 ## Example Workflows
@@ -273,7 +270,7 @@ for url in promising_urls:
 - **LinkedIn scraping failures**: `references/linkedin-scraping-failures.md` — documented anti-bot blocks, fallback strategies, URL disambiguation when LinkedIn returns 404.
 - **CDN bot detection workarounds**: `references/cdn-bot-detection.md` — Akamai and similar CDN blocking patterns with Playwright/Chromium in-page fetch() workaround.
 - **Firecrawl unresponsive**: `references/firecrawl-unresponsive.md` — troubleshooting timed-out `/v1/scrape` calls, diagnosis steps, fallback strategies.
-- **Self-hosted API details**: `references/self-hosted-api.md`, `references/self-hosted-api-endpoints.md`, `references/self-hosted-api-behavior.md` — tested endpoint availability and behavior.
+- **Self-hosted API details**: `references/self-hosted-api.md` — tested endpoint availability, scrape options, hybrid pattern, deployment config.
 
 ## Resources
 

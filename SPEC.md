@@ -6,7 +6,7 @@ Central repo for skills by pr-purgatory team.
 - ∀ skill ! separate dir.
 - ∀ skill ! `SKILL.md`.
 - No secrets in repo.
-- Use `cavekit` for SDD.
+- Use `cavekit` for SDD (upstream: https://github.com/JuliusBrussee/cavekit; ⊥ vendored copy in repo).
 
 ## §I INTERFACES
 - `SKILL.md`: Skill definition & instructions.
@@ -100,7 +100,7 @@ id|status|task|cites
 089|x|Normalize all SKILL.md to V3/V4|V3,V4
 090|x|Add `LICENSE`/`AGENT.md`/`SPEC.md` for deep-research-firecrawl; `SPEC.md` for revert-forge, sandbox-forge|V2
 091|x|Add `deep-research-firecrawl` to `AGENTS.md`/README registry|V5
-092|.|Track or drop `test_skill.md` (cavekit protocol; gitignored but referenced by §C)|§C
+092|x|Track or drop `test_skill.md` → dropped; §C cites upstream cavekit|§C
 
 ## §B BUGS
 id|date|cause|fix

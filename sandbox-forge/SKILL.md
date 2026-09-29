@@ -31,7 +31,7 @@ Every sandboxed container MUST follow these strict security constraints:
    - Limit memory (`-m 512m` or `--memory-swap 512m`).
 2. **JobManager Container TTL & Auto-Pruning**:
    - Every spawned container must have a defined TTL (Time-To-Live). Default maximum execution time is **60 seconds**.
-   - Auto-kill containers after TTL expires using a background timeout or wrapper daemon.
+   - Enforce TTL with in-container `timeout -s KILL 60` plus a host watchdog `docker kill` (see template). ⊥ rely on killing the `docker run` client.
    - Label every sandbox container (`--label sandbox-forge=1`) and prune only those (`docker container prune -f --filter "label=sandbox-forge=1" --filter "until=5m"`) on startup or shutdown of any sandboxed task. ⊥ unscoped prune — it deletes the user's unrelated stopped containers.
 
 ---
@@ -39,10 +39,13 @@ Every sandboxed container MUST follow these strict security constraints:
 ## Invocation & Script Generation
 
 When generating sandbox runs:
-1. Write the target test/untrusted script to a temporary file inside the workspace.
-2. Formulate the docker run command:
+1. Write the target test/untrusted script to `sandbox_temp/` inside the workspace.
+2. Run it with the template below. It enforces the 60s TTL twice: `timeout` inside the container, and a host-side watchdog that `docker kill`s the container if the inner timeout is missing or bypassed. Killing only the `docker run` client is NOT enough — the container keeps running — so the template runs detached, names the container, and always removes it.
    ```bash
-   docker run --rm \
+   NAME="sandbox-forge-$(date +%s)-$$"
+   trap 'docker rm -f "$NAME" >/dev/null 2>&1' EXIT
+
+   docker run -d --name "$NAME" \
      --label sandbox-forge=1 \
      --network none \
      --cap-drop=ALL \
@@ -50,15 +53,21 @@ When generating sandbox runs:
      --read-only \
      --tmpfs /tmp:rw,noexec,nosuid,size=64m \
      --pids-limit 128 \
-     -m 512m \
+     -m 512m --memory-swap 512m \
      --cpus="1.0" \
      -v "$(pwd)/sandbox_temp:/app:ro" \
      -w /app \
      python:3.11-slim \
-     python test_script.py
+     timeout -s KILL 60 python test_script.py >/dev/null
+
+   ( sleep 65; docker kill "$NAME" >/dev/null 2>&1 ) &   # host watchdog
+   WATCHDOG=$!
+   EXIT_CODE=$(docker wait "$NAME")
+   kill "$WATCHDOG" 2>/dev/null
+   OUTPUT=$(docker logs "$NAME" 2>&1 | tail -c 20000)
    ```
-3. Check the exit code and stderr. Return structured feedback.
-4. Clean up any generated temporary script files immediately after execution completes.
+3. Interpret `EXIT_CODE`: `0` success; `137` killed (TTL or OOM — check `docker inspect -f '{{.State.OOMKilled}}' "$NAME"` before the trap removes it); anything else = script failure. Return exit code, OOM/timeout flag, and `OUTPUT` as structured feedback.
+4. Delete the generated files in `sandbox_temp/` immediately after execution, including on failure.
 
 ---
 

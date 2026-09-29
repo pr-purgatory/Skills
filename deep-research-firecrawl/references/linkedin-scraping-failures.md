@@ -8,7 +8,7 @@ LinkedIn profiles are aggressively protected against automated access. Multiple 
 | Firecrawl `scrape` with `proxy: stealth` | `document_antibot` — blocked after retries |
 | Firecrawl `scrape` with `proxy: enhanced` | Same anti-bot block |
 | Direct `curl` with browser UA | Returns 404 error page (not profile) |
-| `delegate_task` with browser toolset | Firecrawl MCP server temporarily unreachable; even when up, LinkedIn requires login |
+| Browser subagent | Firecrawl MCP server temporarily unreachable; even when up, LinkedIn requires login |
 
 ## What Works Instead
 

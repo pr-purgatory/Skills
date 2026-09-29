@@ -62,7 +62,7 @@ When Firecrawl's scrape endpoint is timing out, use these alternatives in order:
 
 1. **Firecrawl Search Only** — `/v1/search` was still responding during this session, returning results with title/url/description. Can sometimes get enough info without scraping.
 
-2. **Browser Subagent** — `delegate_task` with `browser` toolset can navigate sites directly, scroll, and read headlines. Slower but reliable.
+2. **Browser Subagent** — A browser subagent/tool can navigate sites directly, scroll, and read headlines. Slower but reliable.
 
 3. **Manual Briefing** — If both fail, inform the user that Firecrawl is unresponsive and offer alternative sources (user may check themselves).
 
@@ -76,10 +76,8 @@ results = requests.post(f"{FIRECRAWL_URL}/v1/search", json={"query": "top news",
 # Instead, use the search results' descriptions as summary info
 
 # Step 3: If ALL Firecrawl endpoints timeout, fall back to browser subagent
-delegate_task(
-    goal="Browse these news sites and extract today's top 10 headlines: apnews.com, bbc.com, reuters.com",
-    toolsets=["browser"],
-    context="Return headline, one-sentence summary, and URL for each story."
+run_browser_subagent(  # placeholder for your agent's browser tool
+    task="Browse apnews.com, bbc.com, reuters.com; return today's top 10 headlines with one-sentence summary and URL each"
 )
 ```
 
