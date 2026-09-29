@@ -3,7 +3,7 @@
 Execute untrusted code in isolated, resource-capped, short-lived Docker containers.
 
 ## §C CONSTRAINTS
-- Docker required.
+- Podman or Docker required (template auto-selects podman when present; override with `RT=`).
 - Defaults: `--network none`, `--cap-drop=ALL`, `--read-only`, tmpfs `/tmp` noexec, `-m 512m`, `--cpus=1.0`.
 - Max runtime 60s.
 

@@ -1,6 +1,6 @@
 {
   "skill_name": "sandbox-forge",
-  "notes": "Requires Docker. Copy the fixture into sandbox_temp/ as test_script.py before each run.",
+  "notes": "Requires Podman or Docker. Copy the fixture to sandbox_temp/$SCRIPT (unique per run, per the template) before each run.",
   "evals": [
     {
       "id": 1,
