@@ -90,6 +90,7 @@ id|status|task|cites
 084|x|[test-sentry] Track commit hashes to block loop triggers|tbd_skills_roadmap
 085|x|[test-sentry] Enforce test coverage & diff gates|tbd_skills_roadmap
 086|x|[supply-chain] Restrict local agent package configs to private|tbd_skills_roadmap
+087|x|Prune 17 generic/unimplemented skills (tasks 021-026,058-085 obsolete)|review
 
 ## §B BUGS
 id|date|cause|fix

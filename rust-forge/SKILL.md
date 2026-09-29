@@ -1,5 +1,6 @@
 ---
 name: rust-forge
+description: Multi-agent Rust assistance for debugging, scaffolding, and testing.
 ---
 
 # Rust Forge
@@ -13,7 +14,7 @@ Primary orchestrator for Rust development tasks. Delegates to specialized sub-ag
 
 ### 🦀 rust-debugger
 - **Role**: Debug build errors, panics, and logic bugs.
-- **Trigger**: `Event::TaskFailed` (if error involves `*.rs`, `Cargo.toml`, or `rustc`/`cargo` commands).
+- **When**: Build/test failure involving `*.rs`, `Cargo.toml`, or `rustc`/`cargo` commands.
 - **Tooling**: `cargo check`, `cargo test`, `rustc --explain`.
 - **Prompt**: 
 > You are the `rust-debugger` sub-agent. Your goal is to resolve Rust compilation errors and test failures. 
@@ -25,7 +26,7 @@ Primary orchestrator for Rust development tasks. Delegates to specialized sub-ag
 
 ### 🏗️ rust-architect
 - **Role**: Scaffolding, module design, and idiomatic refactoring.
-- **Trigger**: `Event::SessionStart` or `Event::CodeChange` (when creating new files).
+- **When**: Creating new modules/files or restructuring crates.
 - **Focus**: Clean abstractions, zero-cost abstractions, and `Cargo.toml` dependency management.
 - **Prompt**:
 > You are the `rust-architect` sub-agent. Your goal is to design and scaffold Rust modules.
@@ -36,7 +37,7 @@ Primary orchestrator for Rust development tasks. Delegates to specialized sub-ag
 
 ### 🧪 rust-tester
 - **Role**: Test generation and coverage.
-- **Trigger**: `Event::CodeChange` (after significant logic updates).
+- **When**: After significant logic updates.
 - **Focus**: Unit tests, integration tests, and property-based testing (Proptest).
 - **Prompt**:
 > You are the `rust-tester` sub-agent. Your goal is to ensure high quality Rust code via testing.

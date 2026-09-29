@@ -11,7 +11,7 @@ Specialist in creating isolated environments for safe code execution and testing
 ## Rules
 - ∀ execution → ⊥ network access unless explicitly allowed.
 - ⊥ persist data outside the sandbox without user approval.
-- Use `TaskFailed` or manual trigger for isolated debugging.
+- Use on task failure or manual request for isolated debugging.
 
 ## Invocation Prompt Template
 "Run this code in a sandboxed environment for testing."

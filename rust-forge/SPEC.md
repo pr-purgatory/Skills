@@ -10,7 +10,6 @@ Multi-agent Rust programming assistance: debug, scaffold, & test.
 ## §I INTERFACES
 - `rust-forge`: Primary trigger.
 - Sub-agents: `rust-debugger`, `rust-architect`, `rust-tester`.
-- Triggers: `CodeChange`, `TaskFailed`, `SessionStart`.
 
 ## §V INVARIANTS
 V1: ∀ sub-agent invocation → pass relevant `Cargo.toml` context.

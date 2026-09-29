@@ -10,7 +10,6 @@ Multi-platform UI app assistance: Swift (Apple), C#/.NET (Windows), Rust (Linux)
 ## §I INTERFACES
 - `ui-forge`: Primary skill trigger.
 - Sub-agents: `apple-smith`, `windows-smith`, `linux-smith`.
-- Triggers: `UIChange`, `TaskFailed`, `SessionStart`.
 
 ## §V INVARIANTS
 V1: ∀ platform task → delegate to specific sub-agent.
