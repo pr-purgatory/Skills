@@ -1,0 +1,73 @@
+{
+  "skill_name": "archie",
+  "notes": "Run each eval in a small throwaway repo. Check the written archie-plan.md.",
+  "evals": [
+    {
+      "id": 1,
+      "setup": "Python repo with a CLI, no tests, README with outdated usage.",
+      "prompt": "archie: add a --json flag to the CLI, add tests, and update the README.",
+      "expected_output": "Plan with scored tasks, README edit scored jr, tests scored eng, each with pass/fail criteria, status and gotchas.",
+      "files": [],
+      "expectations": [
+        "Every task lists score, level, tier, executor, status, depends, pass, fail and gotchas",
+        "README update is scored 1-2 and tier light",
+        "Levels follow 1-2 jr, 2.5-3 eng, 3.5-4 sr, 4.5-5 ar",
+        "No task scored above 3 has a subagent executor",
+        "Plan header shows draft at strong tier and audit result from max tier",
+        "Plan contains a Questions for Prompter table with a default per question"
+      ]
+    },
+    {
+      "id": 2,
+      "setup": "Host exposes exactly two models, one cheap and one capable.",
+      "prompt": "archie: plan a refactor of the auth module into a service.",
+      "expected_output": "Tiers collapse upward onto the two models; architecture decision scored 4.5-5 stays on the main agent.",
+      "files": [],
+      "expectations": [
+        "Tiers header maps light and standard to the cheaper model and strong and max to the better one",
+        "Service boundary design is scored ar and executed by the main agent",
+        "No vendor or model name appears outside the Tiers header"
+      ]
+    },
+    {
+      "id": 3,
+      "setup": "Plan exists; an eng-level task failed its Pass criteria once with a subagent.",
+      "prompt": "archie: continue the plan.",
+      "expected_output": "Failed task is re-run one tier up with score +1 and the failure in gotchas; a second failure marks it blocked.",
+      "files": [],
+      "expectations": [
+        "Task re-run on the next tier, not the same tier",
+        "Score raised by 1 and failure appended to Gotchas",
+        "After a second failure status is blocked and the prompter is asked",
+        "Does not loop at the same tier"
+      ]
+    },
+    {
+      "id": 4,
+      "setup": "Unknown repo with unknown test command and package manager.",
+      "prompt": "archie: plan adding retry logic to the HTTP client.",
+      "expected_output": "Asks test command, package manager and off-limits files in one batched question table instead of running discovery commands first.",
+      "files": [],
+      "expectations": [
+        "Questions batched in one message with proposed defaults",
+        "Does not run multiple exploratory commands to find the test runner",
+        "Unanswered questions proceed on the default and are marked assumed"
+      ]
+    },
+    {
+      "id": 5,
+      "setup": "Repo with three independent modules a, b, c and a shared config.py.",
+      "prompt": "archie: add a docstring pass to modules a, b, c, then update config.py and run the full test suite.",
+      "expected_output": "Docstring tasks share wave 1 and run concurrently on light/standard subagents; config edit and test run follow in later waves.",
+      "files": [],
+      "expectations": [
+        "Plan has a Waves line and each task has Wave and Parallel fields",
+        "The three module tasks are in the same wave with Parallel: yes",
+        "Subagents for the wave are launched in one batch, not sequentially",
+        "Test-suite task is in a later wave than every task it depends on",
+        "No two same-wave tasks write the same file",
+        "Concurrent subagents do not exceed the stated limit (default 4)"
+      ]
+    }
+  ]
+}

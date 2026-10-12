@@ -43,6 +43,7 @@ Add the absolute path of the desired `SKILL.md` to your configuration file or pr
 
 | Agent Name | Description | Rules File |
 |------------|-------------|------------|
+| `archie` | Task planner; scores difficulty and routes to cheaper models | `archie/AGENT.md` |
 | `deep-research-firecrawl` | Source-cited web research via self-hosted Firecrawl | `deep-research-firecrawl/AGENT.md` |
 | `lfm` | Failure memory manager | `lfm/AGENT.md` |
 | `redteam` | Security and risk auditor | `redteam/AGENT.md` |
