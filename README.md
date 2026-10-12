@@ -6,6 +6,7 @@ Collection of specialized agent skills and subagents for the autonomous engineer
 
 ## 🆕 Recent Updates
 - **Registry:** Central `AGENTS.md` subagent registry.
+- **Archie:** Task planner that scores subtasks 1-5 (jr/eng/sr/ar), routes cheap work to cheaper model tiers, and runs independent tasks in parallel waves.
 - **Skill Pruning:** Removed 17 generic/unimplemented scaffold skills; remaining skills each carry concrete, non-obvious procedure.
 - **Skill Hardening:** Canonicalized LFM hashing, CVSS-to-SARIF mapping for RedTeam, and Tone Drift Guard for Selina.
 
@@ -73,6 +74,10 @@ You can orchestrate multiple specialists to handle a full feature lifecycle in o
 ### Security Hardening
 **User:** "/redteam verbose review the new payment gateway integration."
 **Result:** RedTeam assigns CVSS scores, identifies a race condition in balance checks, and provides a PoC `curl` command to prove the double-spend.
+
+### Cost-Routed Planning
+**User:** "/archie plan a CLI `--json` flag, tests, and README update."
+**Result:** `archie` drafts a scored plan with pass/fail criteria, audits it at the top tier, then runs the README and test tasks as parallel waves on light/standard-tier subagents while keeping design work on the main agent.
 
 ### Cross-Platform UI Scaffolding
 **User:** "Use `ui-forge` to build a file picker for both iOS and Windows."
