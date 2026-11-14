@@ -71,7 +71,7 @@ Apply audit fixes to the plan and note `Audit: pass | pass-with-fixes (N)` in th
 
 ## Plan spec format
 
-Write to `archie-plan.md` in the workspace root (or a path the prompter gives). Contents:
+Each plan gets its own folder under an `archie/` folder in the workspace root (create `archie/` if it is missing): `archie/<plan-slug>/archie-plan.md`, where `<plan-slug>` is a short kebab-case name for the sub-project (for example `archie/win-kdrivers/archie-plan.md`). Put any reference data, notes, check scripts, screenshots or other metadata for that plan in the same folder, never loose in the workspace root. Never write a plan to the workspace root. If the prompter gives a path, use it, but still keep one folder per plan. Contents:
 
 ```
 # Plan: [title]

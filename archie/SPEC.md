@@ -10,7 +10,7 @@ Cut token cost: plan once at high capability, execute mechanical work on cheap m
 ## §I INTERFACES
 - `SKILL.md`: scale, tier resolution, process, plan format.
 - Invocation: "archie / plan this / break this down / score these tasks".
-- Output: `archie-plan.md` (header, Questions for Prompter, tasks, cost note).
+- Output: `archie/<plan-slug>/archie-plan.md` (header, Questions for Prompter, tasks, cost note); one folder per plan holds its reference data and metadata, never the workspace root.
 - `evals/evals.json`: behavior checks.
 
 ## §V INVARIANTS
@@ -24,6 +24,7 @@ V7: Failed task escalates once, second failure → `blocked`.
 V8: Subagent prompt = task, files, criteria, gotchas only.
 V9: ∀ task → wave = 1 + max(dep waves); same-wave tasks share no written file or mutable state.
 V10: `sr`/`ar` tasks `Parallel: no`; concurrent subagents ≤ prompter limit (default 4).
+V11: Plan path = `archie/<plan-slug>/archie-plan.md`; plan metadata lives in that folder; ⊥ plan or plan files in workspace root.
 
 ## §T TASKS
 id|status|task|cites
@@ -32,6 +33,7 @@ id|status|task|cites
 003|x|Add evals|V2,V3,V4,V5,V7
 004|x|Register in `AGENTS.md` and README|SPEC V5
 005|x|Wave-based parallel execution of light/standard tasks|V9,V10
+006|x|One folder per plan under `archie/`|V11
 
 ## §B BUGS
 id|date|cause|fix

@@ -1,6 +1,6 @@
 {
   "skill_name": "archie",
-  "notes": "Run each eval in a small throwaway repo. Check the written archie-plan.md.",
+  "notes": "Run each eval in a small throwaway repo. Check the written archie/<plan-slug>/archie-plan.md.",
   "evals": [
     {
       "id": 1,
@@ -14,7 +14,8 @@
         "Levels follow 1-2 jr, 2.5-3 eng, 3.5-4 sr, 4.5-5 ar",
         "No task scored above 3 has a subagent executor",
         "Plan header shows draft at strong tier and audit result from max tier",
-        "Plan contains a Questions for Prompter table with a default per question"
+        "Plan contains a Questions for Prompter table with a default per question",
+        "Plan is written to archie/<plan-slug>/archie-plan.md, not to the workspace root"
       ]
     },
     {
