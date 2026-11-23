@@ -7,6 +7,14 @@ REPO_DIR = "/Users/bb/code/pr-purgatory/Skills"
 CONFIG_PLUGIN_DIR = "/Users/bb/.gemini/config/plugins/pr-purgatory-skills"
 ANTIGRAVITY_SKILLS_DIR = "/Users/bb/.gemini/antigravity/skills"
 GEMINI_SKILLS_DIR = "/Users/bb/.gemini/skills"
+# Claude Code personal skills (loaded as plain `/<name>` alongside any claude.ai copies)
+CLAUDE_SKILLS_DIR = os.path.expanduser("~/.claude/skills")
+
+# Skills also synced to CLAUDE_SKILLS_DIR. Only these folders are replaced there;
+# nothing else in ~/.claude/skills (synced/, other personal skills) is touched.
+CLAUDE_SKILLS = [
+    "archie",
+]
 
 ACTIVE_SKILLS = [
     "archie",
@@ -146,6 +154,15 @@ def run_sync():
                 if os.path.isdir(path):
                     shutil.rmtree(path)
                     print(f"  Removed pruned skill from gemini: {item}")
+
+    print("\n--- 5. Syncing ~/.claude/skills (Claude Code) ---")
+    os.makedirs(CLAUDE_SKILLS_DIR, exist_ok=True)
+    for skill in CLAUDE_SKILLS:
+        assert skill in ACTIVE_SKILLS, f"{skill} is not an active skill"
+        src = os.path.join(REPO_DIR, skill)
+        dst = os.path.join(CLAUDE_SKILLS_DIR, skill)
+        sync_dir(src, dst)
+        print(f"  Synced -> {dst}")
 
     print("\n--- Sync Complete ---")
 
