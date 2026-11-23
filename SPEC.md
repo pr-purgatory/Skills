@@ -101,6 +101,7 @@ id|status|task|cites
 090|x|Add `LICENSE`/`AGENT.md`/`SPEC.md` for deep-research-firecrawl; `SPEC.md` for revert-forge, sandbox-forge|V2
 091|x|Add `deep-research-firecrawl` to `AGENTS.md`/README registry|V5
 092|x|Track or drop `test_skill.md` → dropped; §C cites upstream cavekit|§C
+093|x|Add `provenance` skill for clean-room reverse engineering reviews|V1,V2,V3,V4,V5
 
 ## §B BUGS
 id|date|cause|fix

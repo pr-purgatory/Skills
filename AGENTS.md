@@ -7,6 +7,7 @@ This registry defines the available subagents derived from the local skills. Use
 | `archie` | Task planner; scores difficulty and routes to cheaper models | `archie/AGENT.md` |
 | `deep-research-firecrawl` | Source-cited web research via self-hosted Firecrawl | `deep-research-firecrawl/AGENT.md` |
 | `lfm` | Failure memory manager | `lfm/AGENT.md` |
+| `provenance` | Clean-room and decompiler contamination auditor | `provenance/AGENT.md` |
 | `redteam` | Security and risk auditor | `redteam/AGENT.md` |
 | `revert-forge` | Safe rollback specialist | `revert-forge/AGENT.md` |
 | `rust-forge`| Rust development orchestrator | `rust-forge/AGENT.md` |

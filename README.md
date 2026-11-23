@@ -47,6 +47,7 @@ Add the absolute path of the desired `SKILL.md` to your configuration file or pr
 | `archie` | Task planner; scores difficulty and routes to cheaper models | `archie/AGENT.md` |
 | `deep-research-firecrawl` | Source-cited web research via self-hosted Firecrawl | `deep-research-firecrawl/AGENT.md` |
 | `lfm` | Failure memory manager | `lfm/AGENT.md` |
+| `provenance` | Clean-room and decompiler contamination auditor | `provenance/AGENT.md` |
 | `redteam` | Security and risk auditor | `redteam/AGENT.md` |
 | `revert-forge` | Safe rollback specialist | `revert-forge/AGENT.md` |
 | `rust-forge`| Rust development orchestrator | `rust-forge/AGENT.md` |
@@ -70,6 +71,10 @@ You can orchestrate multiple specialists to handle a full feature lifecycle in o
 ---
 
 ## 💡 Practical Examples
+
+### Clean-Room Reverse Engineering Audit
+**User:** "/provenance audit PR #42 implementing proprietary protocol parsing."
+**Result:** `provenance` scans the PR diff for Hex-Rays/Ghidra decompiler artifacts (`v1`, `LODWORD`, `uVar1`), flags an unmasked internal build path as a BLOCKER, and outputs a SARIF report with quarantine instructions.
 
 ### Security Hardening
 **User:** "/redteam verbose review the new payment gateway integration."
