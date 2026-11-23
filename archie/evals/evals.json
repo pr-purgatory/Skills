@@ -1,21 +1,23 @@
 {
   "skill_name": "archie",
-  "notes": "Run each eval in a small throwaway repo. Check the written archie/<plan-slug>/archie-plan.md.",
+  "notes": "Run each eval in a small throwaway repo. Check the written archie/<plan-slug>/ folder (STATUS.md, archie-plan.md, done/) and archie/INDEX.md.",
   "evals": [
     {
       "id": 1,
       "setup": "Python repo with a CLI, no tests, README with outdated usage.",
       "prompt": "archie: add a --json flag to the CLI, add tests, and update the README.",
-      "expected_output": "Plan with scored tasks, README edit scored jr, tests scored eng, each with pass/fail criteria, status and gotchas.",
+      "expected_output": "Plan with scored tasks, README edit scored jr, tests scored eng, each with pass/fail criteria and gotchas; status in STATUS.md.",
       "files": [],
       "expectations": [
-        "Every task lists score, level, tier, executor, status, depends, pass, fail and gotchas",
+        "Every task spec lists score, level, tier, executor, depends, pass, fail and gotchas, and has no Status line",
+        "STATUS.md has one row per task with its status, and is under 4 KB",
         "README update is scored 1-2 and tier light",
         "Levels follow 1-2 jr, 2.5-3 eng, 3.5-4 sr, 4.5-5 ar",
         "No task scored above 3 has a subagent executor",
-        "Plan header shows draft at strong tier and audit result from max tier",
+        "Plan header shows the audit result from max tier",
         "Plan contains a Questions for Prompter table with a default per question",
-        "Plan is written to archie/<plan-slug>/archie-plan.md, not to the workspace root"
+        "Plan is written to archie/<plan-slug>/archie-plan.md, not to the workspace root",
+        "archie/INDEX.md has a row for the plan and archie/ROUTING.md holds the tier mapping"
       ]
     },
     {
@@ -25,9 +27,9 @@
       "expected_output": "Tiers collapse upward onto the two models; architecture decision scored 4.5-5 stays on the main agent.",
       "files": [],
       "expectations": [
-        "Tiers header maps light and standard to the cheaper model and strong and max to the better one",
+        "archie/ROUTING.md maps light and standard to the cheaper model and strong and max to the better one",
         "Service boundary design is scored ar and executed by the main agent",
-        "No vendor or model name appears outside the Tiers header"
+        "No vendor or model name appears outside archie/ROUTING.md or a plan's tier override"
       ]
     },
     {
@@ -39,7 +41,7 @@
       "expectations": [
         "Task re-run on the next tier, not the same tier",
         "Score raised by 1 and failure appended to Gotchas",
-        "After a second failure status is blocked and the prompter is asked",
+        "After a second failure the STATUS.md row is blocked and the prompter is asked",
         "Does not loop at the same tier"
       ]
     },
@@ -67,7 +69,47 @@
         "Subagents for the wave are launched in one batch, not sequentially",
         "Test-suite task is in a later wave than every task it depends on",
         "No two same-wave tasks write the same file",
-        "Concurrent subagents do not exceed the stated limit (default 4)"
+        "Concurrent subagents do not exceed the stated limit (default 4)",
+        "Only the main agent writes STATUS.md"
+      ]
+    },
+    {
+      "id": 6,
+      "setup": "archie/ has INDEX.md and ten plan folders; one plan 'api' is active with tasks T1-T3 done (in done/wave-1.md) and T4 open; the others are done.",
+      "prompt": "archie: what's next on the api plan? Then do it.",
+      "expected_output": "Reads INDEX.md and archie/api/STATUS.md, then only T4's spec; does not open other plans or done/.",
+      "files": [],
+      "expectations": [
+        "Reads archie/INDEX.md before any plan file",
+        "Does not open archie-plan.md of the nine done plans",
+        "Does not read archie/api/done/ unless T4 needs history, and then searches it rather than reading it whole",
+        "After T4 passes, its block is in done/wave-N.md with a Result line, a stub remains in archie-plan.md, and STATUS.md and INDEX.md are updated"
+      ]
+    },
+    {
+      "id": 7,
+      "setup": "Git repo; work runs on branch feat-x in a worktree; plan archie/x/ exists on main.",
+      "prompt": "archie: T2 passed, record it.",
+      "expected_output": "Status change is a small status-only commit on main; the moved task block travels with feat-x.",
+      "files": [],
+      "expectations": [
+        "STATUS.md and INDEX.md changes are committed on the default branch, not only on feat-x",
+        "The T2 block move to done/ is committed on feat-x",
+        "If committing to main is not allowed, the report says so instead of keeping status only on the branch"
+      ]
+    },
+    {
+      "id": 8,
+      "setup": "Older plan with Status: lines in each task, no STATUS.md, a 15 KB Progress section; some tasks done, some open.",
+      "prompt": "archie: migrate this plan to the new layout.",
+      "expected_output": "STATUS.md built from task headings and checked; done blocks and the Progress section moved to done/; open specs remain.",
+      "files": [],
+      "expectations": [
+        "STATUS.md lists every task id, with statuses from the ROUTING.md vocabulary only (no 'partly done')",
+        "Done task blocks are in done/wave-N.md with stubs left in archie-plan.md",
+        "The Progress section is in done/log.md, newest first",
+        "No Status: lines remain in archie-plan.md task specs",
+        "The folder and archie-plan.md name are unchanged so existing links still work"
       ]
     }
   ]
